@@ -5,10 +5,10 @@ import { beneficios } from "./data";
 export function Hero() {
   return (
     <section className="hero">
-      <img src={hero} alt="Camión de Expreso Morabito en Buenos Aires" className="hero-img" width={1920} height={1088} />
+      <img src={hero} alt="Camión de SIGER" className="hero-img" width={1920} height={1088} />
       <div className="hero-shade" />
       <div className="container hero-in">
-        <Eyebrow>Expreso Morabito · Transporte regional</Eyebrow>
+        <Eyebrow>SIGER · Transporte nacional</Eyebrow>
         <h1>Servicios diarios de <em>encomiendas y cargas generales</em></h1>
         <p className="hero-sub">Rapidez, confianza y compromiso en cada entrega.</p>
         <div className="hero-btns">
