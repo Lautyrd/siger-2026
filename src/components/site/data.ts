@@ -11,7 +11,6 @@ export const beneficios = [
 export const servicios = [
   { t: "Encomiendas", d: "Despacho de paquetes y bultos con una operatoria simple, directa y pensada para entregas frecuentes." },
   { t: "Cargas generales", d: "Traslado de mercadería y cargas de distinto volumen según coordinación previa." },
-  { t: "Mudanzas", d: "Traslados coordinados para hogares, oficinas y comercios, de acuerdo con el volumen y el destino." },
   { t: "Envíos express", d: "Entregas rápidas en 24 o 48 horas, según el origen, el destino y la coordinación operativa." },
   { t: "Distribución comercial", d: "Soporte logístico para negocios que necesitan abastecer o entregar mercadería regularmente." },
   { t: "Redespachos nacionales", d: "Combinamos el envío con otros transportes para alcanzar destinos en las demás provincias de la Argentina." },

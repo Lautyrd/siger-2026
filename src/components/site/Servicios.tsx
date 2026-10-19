@@ -8,7 +8,6 @@ import { servicios } from "./data";
 const destacados = [
   { img: c1, icon: "calendar", t: "Salidas diarias", d: "Conexiones programadas entre nuestras bases y las zonas de cobertura." },
   { img: c2, icon: "clock", t: "Envíos express", d: "Entregas rápidas en 24 o 48 horas, según el origen y el destino." },
-  { img: c3, icon: "home", t: "Mudanzas", d: "Traslados coordinados para hogares, oficinas y comercios." },
   { img: c4, icon: "headset", t: "Atención personalizada", d: "Coordinación directa para cada envío y necesidad." },
 ];
 
@@ -23,7 +22,7 @@ export function Destacados() {
           </div>
           <p className="lead">Cuatro formas de acompañar tus envíos, con atención directa y una operación adaptada a cada necesidad.</p>
         </div>
-        <div className="grid4">
+        <div className="grid3">
           {destacados.map((c, i) => (
             <article className="fcard" key={c.t}>
               <div className="fcard-img"><img src={c.img} alt={c.t} loading="lazy" width={1056} height={640} /></div>
