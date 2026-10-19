@@ -201,7 +201,8 @@
   .hero-img, .hero-shade { height: 640px; }
   .hero-bar { top: 628px; }
   .hero-in { padding-top: 80px; height: 600px; }
-  .hero h1 { font-size: 50px; }
+  .hero h1 { font-size: 44px; }
+  .logo-wrap { justify-content: flex-start; padding: 0 0 0 20px; }
   .hero-sub { font-size: 19px; }
   .hero-btns { flex-direction: column; align-items: stretch; }
   .h2, .h2.big, .h2.sm { font-size: 38px; }
