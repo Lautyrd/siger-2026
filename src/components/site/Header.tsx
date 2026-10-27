@@ -1,5 +1,8 @@
 import { Icon } from "./Icon";
 import { nav } from "./data";
+import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export function Logo() {
   return (
@@ -9,7 +12,7 @@ export function Logo() {
   );
 }
 
-export function Header() {
+export function Header({ compact = false }: { compact?: boolean }) {
   return (
     <header>
       <div className="topbar">
@@ -22,11 +25,11 @@ export function Header() {
       <div className="navbar">
         <div className="logo-wrap"><Logo /></div>
         <div className="container nav-in">
-          <nav className="nav">
+          {compact ? <Button asChild className="btn btn-white return-home"><Link to="/"><ArrowLeft />Volver al Inicio</Link></Button> : <><nav className="nav">
             {nav.map((n) => <a key={n.t} href={n.href}>{n.t}</a>)}
             <a href="#contacto" className="nav-cta">Contacto</a>
           </nav>
-          <button className="burger" aria-label="Menú"><span /><span /><span /></button>
+          <button className="burger" aria-label="Menú"><span /><span /><span /></button></>}
         </div>
       </div>
     </header>
