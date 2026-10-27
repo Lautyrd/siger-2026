@@ -218,3 +218,9 @@
   .form { padding: 26px; }
   .help img { width: 70px; height: 70px; } .help span { display: none; }
 }
+
+/* Desplazamiento suave para los enlaces del menú */
+html { scroll-behavior: smooth; }
+
+/* Mensajes de error de los formularios */
+.fgrid .err { color: #c0392b; font-size: 12px; font-weight: 600; }
