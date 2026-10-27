@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OperarioRouteImport } from './routes/operario'
+import { Route as RepartidorRouteImport } from './routes/repartidor'
 import { Route as SeguimientoRouteImport } from './routes/seguimiento'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OperarioRoute = OperarioRouteImport.update({
+  id: '/operario',
+  path: '/operario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepartidorRoute = RepartidorRouteImport.update({
+  id: '/repartidor',
+  path: '/repartidor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SeguimientoRoute = SeguimientoRouteImport.update({
@@ -25,27 +37,35 @@ const SeguimientoRoute = SeguimientoRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/operario': typeof OperarioRoute
+  '/repartidor': typeof RepartidorRoute
   '/seguimiento': typeof SeguimientoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/operario': typeof OperarioRoute
+  '/repartidor': typeof RepartidorRoute
   '/seguimiento': typeof SeguimientoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/operario': typeof OperarioRoute
+  '/repartidor': typeof RepartidorRoute
   '/seguimiento': typeof SeguimientoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/seguimiento'
+  fullPaths: '/' | '/operario' | '/repartidor' | '/seguimiento'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/seguimiento'
-  id: '__root__' | '/' | '/seguimiento'
+  to: '/' | '/operario' | '/repartidor' | '/seguimiento'
+  id: '__root__' | '/' | '/operario' | '/repartidor' | '/seguimiento'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OperarioRoute: typeof OperarioRoute
+  RepartidorRoute: typeof RepartidorRoute
   SeguimientoRoute: typeof SeguimientoRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/operario': {
+      id: '/operario'
+      path: '/operario'
+      fullPath: '/operario'
+      preLoaderRoute: typeof OperarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/repartidor': {
+      id: '/repartidor'
+      path: '/repartidor'
+      fullPath: '/repartidor'
+      preLoaderRoute: typeof RepartidorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/seguimiento': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OperarioRoute: OperarioRoute,
+  RepartidorRoute: RepartidorRoute,
   SeguimientoRoute: SeguimientoRoute,
 }
 export const routeTree = rootRouteImport
