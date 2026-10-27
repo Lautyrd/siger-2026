@@ -12,8 +12,8 @@ export function Hero() {
         <h1>Servicios diarios de <em>encomiendas y cargas generales</em></h1>
         <p className="hero-sub">Rapidez, confianza y compromiso en cada entrega.</p>
         <div className="hero-btns">
-          <a href="#" className="btn btn-primary">Consultanos por WhatsApp →</a>
-          <a href="#" className="btn btn-ghost">Ver cobertura</a>
+          <a href="#contacto" className="btn btn-primary">Consultanos por WhatsApp →</a>
+          <a href="#cobertura" className="btn btn-ghost">Ver cobertura</a>
         </div>
       </div>
       <div className="hero-bar" />

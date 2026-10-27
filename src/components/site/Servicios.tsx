@@ -13,7 +13,7 @@ const destacados = [
 
 export function Destacados() {
   return (
-    <section className="sec sec-cream destacados">
+    <section className="sec sec-cream destacados" id="servicios">
       <div className="container">
         <div className="split-head">
           <div>

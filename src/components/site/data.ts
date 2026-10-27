@@ -1,5 +1,9 @@
 // Contenido estático de la página (separado para editar fácilmente).
-export const nav = ["Inicio", "Servicios", "Zonas", "Empresas", "Sucursales"];
+export const nav = [
+  { t: "Servicios", href: "#servicios" },
+  { t: "Cobertura", href: "#cobertura" },
+  { t: "Seguí tu pedido", href: "#seguimiento" },
+] as const;
 
 export const beneficios = [
   { icon: "shield", t: "Seguridad", d: "Cuidamos tu carga en cada recorrido." },
