@@ -5,7 +5,7 @@ import { Eyebrow } from "@/components/site/Icon";
 
 export const Route = createFileRoute("/seguimiento")({
   validateSearch: (search: Record<string, unknown>) => ({
-    guia: typeof search.guia === "string" ? search.guia : "",
+    guia: typeof search["guia"] === "string" ? search["guia"] : "",
   }),
   head: () => ({
     meta: [
