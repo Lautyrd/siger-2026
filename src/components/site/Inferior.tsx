@@ -2,6 +2,8 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { z } from "zod";
 import { Eyebrow } from "./Icon";
 import { nav } from "./data";
+import { trackingGuideSchema } from "@/lib/shipment-demo";
+import { Button } from "@/components/ui/button";
 
 const soloTexto = (campo: string) =>
   z
@@ -33,11 +35,17 @@ const WHATSAPP_CONSULTAS = "5493446505697";
 
 export function Seguimiento() {
   const [guia, setGuia] = useState("");
+  const [errorGuia, setErrorGuia] = useState("");
 
   const abrirSeguimiento = (e: FormEvent) => {
     e.preventDefault();
-    const q = guia.trim();
-    const url = q ? `/seguimiento?guia=${encodeURIComponent(q)}` : "/seguimiento";
+    const resultado = trackingGuideSchema.safeParse(guia);
+    if (!resultado.success) {
+      setErrorGuia(resultado.error.issues[0]?.message ?? "Ingresá el número de guía.");
+      return;
+    }
+    setErrorGuia("");
+    const url = `/seguimiento?guia=${encodeURIComponent(resultado.data)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
@@ -49,14 +57,14 @@ export function Seguimiento() {
           <h2 className="h2 big">Consultar estado de mi envío.</h2>
           <p className="lead">Ingresá el número de guía o seguimiento para conocer en qué etapa se encuentra tu envío.</p>
         </div>
-        <form className="form" onSubmit={abrirSeguimiento}>
+        <form className="form" onSubmit={abrirSeguimiento} noValidate>
           <h3>Seguí tu envío</h3>
           <p className="fsub">El número figura en el comprobante entregado al despachar.</p>
           <div className="fgrid">
-            <label className="full">Número de guía<input placeholder="Ej: 000123456" value={guia} onChange={(e) => setGuia(e.target.value)} /></label>
+            <label className="full">Número de guía<input required maxLength={100} aria-invalid={!!errorGuia} aria-describedby={errorGuia ? "guia-error" : undefined} placeholder="Ej: 000123456" value={guia} onChange={(e) => setGuia(e.target.value)} />{errorGuia && <span className="err" role="alert" id="guia-error">{errorGuia}</span>}</label>
           </div>
           <p className="hint">Si tenés dudas, comunicate con nuestra Casa Central.</p>
-          <button type="submit" className="btn btn-primary">Consultar estado</button>
+          <Button type="submit" className="btn btn-primary">Consultar estado</Button>
         </form>
       </div>
     </section>
@@ -121,12 +129,12 @@ export function Contacto() {
   );
 }
 
-export function Footer() {
+export function Footer({ compact = false }: { compact?: boolean }) {
   return (
     <footer className="footer">
       <div className="container foot-in">
         <div><strong>SIGER</strong><p>Encomiendas y cargas generales</p></div>
-        <nav>{[...nav, { t: "Contacto", href: "#contacto" }].map((n) => <a key={n.t} href={n.href}>{n.t}</a>)}</nav>
+        {!compact && <nav>{[...nav, { t: "Contacto", href: "#contacto" }].map((n) => <a key={n.t} href={n.href}>{n.t}</a>)}</nav>}
       </div>
     </footer>
   );

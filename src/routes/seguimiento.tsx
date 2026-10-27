@@ -25,7 +25,7 @@ function SeguimientoPage() {
 
   return (
     <div className="site">
-      <Header />
+      <Header compact />
       <main>
         <section className="sec sec-white">
           <div className="container">
@@ -47,7 +47,7 @@ function SeguimientoPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer compact />
     </div>
   );
 }
