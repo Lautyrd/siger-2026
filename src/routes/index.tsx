@@ -1,4 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { Truck, ClipboardList } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { Destacados, Servicios } from "@/components/site/Servicios";
@@ -25,6 +27,7 @@ function Index() {
       <Header />
       <main>
         <Hero />
+        <div className="staff-entry-band"><div className="container staff-entry"><Button asChild variant="outline" className="staff-secondary"><Link to="/repartidor" target="_blank" rel="noopener noreferrer"><Truck />Soy repartidor</Link></Button><Button asChild variant="outline" className="staff-secondary"><Link to="/operario" target="_blank" rel="noopener noreferrer"><ClipboardList />Operario</Link></Button></div></div>
         <Destacados />
         <Servicios />
         <Cobertura />
