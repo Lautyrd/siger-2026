@@ -13,7 +13,7 @@ export const shipmentSchema = z.object({
   detalle: z.string().trim().min(1, "Completá el detalle del pedido.").max(1000),
 });
 export type ShipmentInput = z.infer<typeof shipmentSchema>;
-export type Shipment = ShipmentInput & { guia: string; estado: string; repartidor?: string };
+export type Shipment = ShipmentInput & { guia: string; estado: string; repartidor?: string | undefined };
 export const demoShipments: Shipment[] = [
   { guia: "DEMO-001", origen: "Av. 1 y Calle 47, La Plata", destino: "Av. Corrientes 1200, CABA", destinatario: "Cliente de ejemplo", telefono: "1100001234", detalle: "2 cajas de artículos de librería. Entrega en recepción.", estado: "Pendiente de asignación" },
   { guia: "DEMO-002", origen: "Depósito de ejemplo, Rosario", destino: "Sucursal de ejemplo, Córdoba", destinatario: "Comercio de ejemplo", telefono: "1100005678", detalle: "3 bultos de indumentaria.", estado: "En tránsito" },

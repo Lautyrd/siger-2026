@@ -30,7 +30,7 @@ export function StaffPortal({ role }: { role: "repartidor" | "operario" }) {
   return role === "repartidor" ? <DriverPortal /> : <OperatorPortal />;
 }
 
-function Shell({ role, title, onLogout, children }: { role: string; title: string; onLogout?: () => void; children: React.ReactNode }) {
+function Shell({ role, title, onLogout, children }: { role: string; title: string; onLogout?: (() => void) | undefined; children: React.ReactNode }) {
   return <div className="site staff-page">
     <Header compact />
     <main className="sec sec-white staff-main"><div className="container">
