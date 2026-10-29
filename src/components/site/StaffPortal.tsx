@@ -69,13 +69,20 @@ function DriverPortal() {
   }
 
   const mine = token && state ? state.shipments.filter((s) => s.repartidor === token.token) : [];
-  return <Shell role="Repartidor" title={token ? `Hola, ${token.nombre}` : "Acceso de repartidor"} onLogout={token ? () => setToken(null) : undefined}>
+  const activo = token && state ? (state.tokens.find((t) => t.token === token.token)?.activo ?? false) : false;
+  function logout() { if (token) post({ type: "activo", token: token.token, activo: false }); setToken(null); }
+  return <Shell role="Repartidor" title={token ? `Hola, ${token.nombre}` : "Acceso de repartidor"} onLogout={token ? logout : undefined}>
     {!token ? <form className="form staff-login" onSubmit={login} noValidate>
       <h2>Ingresá tu token</h2>
       <div className="fgrid"><label className="full">Token de 4 caracteres<input name="token" maxLength={4} autoComplete="off" style={{ textTransform: "uppercase", letterSpacing: "0.3em" }} required /></label></div>
       {error && <p className="staff-error" role="alert">{error}</p>}
       <Button className="btn btn-primary staff-submit" type="submit" disabled={!!pending}>{pending ? "Verificando…" : "Ingresar"}<ArrowRight /></Button>
-    </form> : mine.length === 0 ? <p>No tenés envíos asignados por ahora.</p> : mine.map((s) => <article className="shipment-card" key={s.guia} style={{ marginBottom: 20 }}>
+    </form> : <>
+      <div className="staff-toolbar">
+        <p>Tu estado: <span className={`staff-status ${activo ? "on" : "off"}`} role="status">{activo ? "Activo" : "Inactivo"}</span></p>
+        <Button className="btn btn-primary" onClick={() => post({ type: "activo", token: token.token, activo: !activo })}>{activo ? "Pasar a inactivo" : "Ponerme activo"}</Button>
+      </div>
+      {mine.length === 0 ? <p>No tenés envíos asignados por ahora.</p> : mine.map((s) => <article className="shipment-card" key={s.guia} style={{ marginBottom: 20 }}>
       <div className="shipment-card-head"><h2><Truck />{s.guia}</h2><span className="staff-status" role="status">{s.estado}</span></div>
       <dl className="shipment-details">
         <div><dt>Origen</dt><dd>{s.origen}</dd></div>
@@ -88,7 +95,7 @@ function DriverPortal() {
         <Button className="btn btn-primary" onClick={() => post({ type: "decide", token: token.token, guia: s.guia, estado: "Aceptado" })}><Check />Aceptar pedido</Button>
         <Button variant="outline" className="staff-secondary" onClick={() => post({ type: "decide", token: token.token, guia: s.guia, estado: "Rechazado" })}><X />Rechazar pedido</Button>
       </div>}
-    </article>)}
+    </article>)}</>}
   </Shell>;
 }
 
@@ -108,6 +115,7 @@ function OperatorPortal() {
     if (!live.current.loggedIn) return;
     if (m.type === "request") post({ type: "sync", tokens: live.current.tokens, shipments: live.current.shipments });
     if (m.type === "decide") setShipments((rows) => rows.map((s) => s.guia === m.guia && s.repartidor === m.token ? { ...s, estado: m.estado } : s));
+    if (m.type === "activo") setTokens((rows) => rows.map((t) => t.token === m.token ? { ...t, activo: m.activo } : t));
   });
   useEffect(() => { if (loggedIn) post({ type: "sync", tokens, shipments }); }, [tokens, shipments, loggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -127,7 +135,7 @@ function OperatorPortal() {
     e.preventDefault();
     const r = driverNameSchema.safeParse(driverName);
     if (!r.success) { setTokenError(r.error.issues[0]?.message ?? ""); return; }
-    setTokens((t) => [...t, { token: generateDriverToken(t.map((x) => x.token)), nombre: r.data }]);
+    setTokens((t) => [...t, { token: generateDriverToken(t.map((x) => x.token)), nombre: r.data, activo: false }]);
     setDriverName(""); setTokenError("");
   }
   function revoke(token: string) {
@@ -170,6 +178,7 @@ function OperatorPortal() {
       {tokens.length > 0 && <ul style={{ listStyle: "none", padding: 0, marginTop: 16, display: "grid", gap: 8 }}>
         {tokens.map((t) => <li key={t.token} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <strong style={{ letterSpacing: "0.2em", fontSize: 18 }}>{t.token}</strong><span>{t.nombre}</span>
+          <span className={`staff-status ${t.activo ? "on" : "off"}`}>{t.activo ? "Activo" : "Inactivo"}</span>
           <Button variant="outline" size="sm" className="staff-secondary" onClick={() => revoke(t.token)}><Trash2 />Dar de baja</Button>
         </li>)}
       </ul>}
