@@ -69,7 +69,9 @@ function DriverPortal() {
   }
 
   const mine = token && state ? state.shipments.filter((s) => s.repartidor === token.token) : [];
-  return <Shell role="Repartidor" title={token ? `Hola, ${token.nombre}` : "Acceso de repartidor"} onLogout={token ? () => setToken(null) : undefined}>
+  const activo = token && state ? (state.tokens.find((t) => t.token === token.token)?.activo ?? false) : false;
+  function logout() { if (token) post({ type: "activo", token: token.token, activo: false }); setToken(null); }
+  return <Shell role="Repartidor" title={token ? `Hola, ${token.nombre}` : "Acceso de repartidor"} onLogout={token ? logout : undefined}>
     {!token ? <form className="form staff-login" onSubmit={login} noValidate>
       <h2>Ingresá tu token</h2>
       <div className="fgrid"><label className="full">Token de 4 caracteres<input name="token" maxLength={4} autoComplete="off" style={{ textTransform: "uppercase", letterSpacing: "0.3em" }} required /></label></div>
