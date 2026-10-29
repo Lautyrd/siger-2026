@@ -20,7 +20,7 @@ export const demoShipments: Shipment[] = [
 ];
 export const driverTokenSchema = z.string().trim().toUpperCase().regex(/^[A-Z0-9]{4}$/, "El token tiene 4 letras o números.");
 export const driverNameSchema = z.string().trim().min(1, "Ingresá el nombre del repartidor.").max(100);
-export type DriverToken = { token: string; nombre: string };
+export type DriverToken = { token: string; nombre: string; activo: boolean };
 const TOKEN_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 export function generateDriverToken(existing: string[], random: () => number = Math.random): string {
   for (;;) {
@@ -33,4 +33,5 @@ export const DEMO_CHANNEL = "siger-demo-staff";
 export type DemoMessage =
   | { type: "request" }
   | { type: "sync"; tokens: DriverToken[]; shipments: Shipment[] }
-  | { type: "decide"; token: string; guia: string; estado: string };
+  | { type: "decide"; token: string; guia: string; estado: string }
+  | { type: "activo"; token: string; activo: boolean };
